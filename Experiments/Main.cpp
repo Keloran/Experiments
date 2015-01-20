@@ -56,7 +56,8 @@ namespace Game {
             printIt(oException.getMessage());
         } catch ( ... ) {
             handleException(std::current_exception());
-        }        
+
+        }
 
         return EXIT_SUCCESS;
     }
