@@ -34,11 +34,13 @@ namespace Game {
 
             // Model Tester
             std::vector<glm::vec3> vVertex;
-            std::vector<glm::vec3> vUV;
+            std::vector<glm::vec2> vUV;
             std::vector<glm::vec3> vNormal;
     
             NordicArts::NordicEngine::Files::Obj oObj("GameFiles/Models/suzanne.obj");
             oObj.loadModel(vVertex, vUV, vNormal);
+
+            printIt(vVertex.size());
 
             // Setup settings
             pSettings->setup();
