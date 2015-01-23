@@ -5,8 +5,10 @@
 #include <NordicEngine/Settings/Settings.hpp>
 #include <NordicEngine/Renderer/Renderer.hpp>
 #include <NordicEngine/Files/Format/Obj/Obj.hpp>
+#include <NordicEngine/Render/Text/Text.hpp>
 
 #include <NordicEngine/ThirdParty/glm/glm/glm.hpp>
+#include <NordicEngine/Color/Color.hpp>
 
 namespace Game {
     void handleException(std::exception_ptr oException) {
@@ -40,8 +42,6 @@ namespace Game {
             NordicArts::NordicEngine::Files::Obj oObj("GameFiles/Models/suzanne.obj");
             oObj.loadModel(vVertex, vUV, vNormal);
 
-            printIt(vVertex.size());
-
             // Setup settings
             pSettings->setup();
 
@@ -56,13 +56,22 @@ namespace Game {
 
             // Renderer
             NordicArts::NordicEngine::Renderer  oRenderer(pLogger, pWindow);
-            NordicArts::NordicEngine::Renderer *pRenderer = &oRenderer;
+            oRenderer.setColor(NordicArts::NordicEngine::Color::Blue);
+
+            // Text
+            NordicArts::NordicEngine::Render::Text oText;
+            oText.setup("GameFiles/Textures/Holstein.DDS");
             
             while (pWindow->isWindowOpen()) {
+                oRenderer.clear();
+
+                oText.render("Tester", 0, 0, 1);
 
                 // Poll the keys and display to screen
                 pWindow->display();
             }
+
+            oText.cleanup();
         } catch (std::exception &oException) {
             throw NordicArts::NordicEngine::Exception(oException.what());
         } catch (NordicArts::NordicEngine::Exception &oException) {
