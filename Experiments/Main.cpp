@@ -54,17 +54,11 @@ namespace Game {
             pWindow->createWindow();
             pWindow->makeContext();
 
-            // Renderer
-            NordicArts::NordicEngine::Renderer  oRenderer(pLogger, pWindow);
-            oRenderer.setColor(NordicArts::NordicEngine::Color::Blue);
-
             // Text
             NordicArts::NordicEngine::Render::Text oText;
             oText.setup("GameFiles/Textures/Holstein.DDS");
             
             while (pWindow->isWindowOpen()) {
-                oRenderer.clear();
-
                 oText.render("Tester", 0, 0, 1);
 
                 // Poll the keys and display to screen
