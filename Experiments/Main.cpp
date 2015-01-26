@@ -71,8 +71,8 @@ namespace Game {
             // Shaders
             NordicArts::NordicEngine::Render::Shaders::Loader  oLoader;
             NordicArts::NordicEngine::Render::Shaders::Loader *pLoader = &oLoader;
-            unsigned int iVertexID      = pLoader->addShader("GameFiles/Shaders/tut1.vertex", "VERTEX");
-            unsigned int iFragmentID    = pLoader->addShader("GameFiles/Shaders/tut1.fragment", "FRAGMENT");
+            pLoader->addShader("GameFiles/Shaders/tut1.vertex", "VERTEX");
+            pLoader->addShader("GameFiles/Shaders/tut1.fragment", "FRAGMENT");
 
             unsigned int iProgramID = pLoader->buildShader();
 
