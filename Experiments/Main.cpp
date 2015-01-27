@@ -74,7 +74,6 @@ namespace Game {
 
             glBufferData(GL_ARRAY_BUFFER, sizeof(fVertex), fVertex, GL_STATIC_DRAW);
 
-
             // Shaders
             NordicArts::NordicEngine::Render::Shaders::Loader  oLoader;
             NordicArts::NordicEngine::Render::Shaders::Loader *pLoader = &oLoader;
@@ -86,7 +85,6 @@ namespace Game {
             int iPosAttrib = pLoader->getAttrib("position");
             glEnableVertexAttribArray(iPosAttrib);
             glVertexAttribPointer(iPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
 
             // Text
             NordicArts::NordicEngine::Render::Text oText;
