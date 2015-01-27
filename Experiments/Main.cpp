@@ -9,6 +9,7 @@
 #include <NordicEngine/Render/Shaders/Loader.hpp>
 
 #include <NordicEngine/ThirdParty/glm/glm/glm.hpp>
+#include <NordicEngine/NordicEngine/Render/Shaders/Loader.hpp>
 
 namespace Game {
     void handleException(std::exception_ptr oException) {
@@ -57,29 +58,35 @@ namespace Game {
             pWindow->makeContext();
             pWindow->initColor(NordicArts::NordicEngine::Color::Blue);
 
-            unsigned int iVertexArrayID;
-            glGenVertexArrays(1, &iVertexArrayID);
-            glBindVertexArray(iVertexArrayID);
+            unsigned int iVAO;
+            glGenVertexArrays(1, &iVAO);
+            glBindVertexArray(iVAO);
 
-            // Triangle
-            float fBuffer[] = {
-                    -1.0f, -1.0f, 0.0f,
-                    1.0f, -1.0f, 0.0f,
-                    0.0f, 1.0f, 0.0f
+            unsigned int iVBO;
+            glGenBuffers(1, &iVBO);
+            glBindBuffer(GL_ARRAY_BUFFER, iVBO);
+
+            float fVertex[] = {
+                    0.0f, 0.5f,
+                    0.5f, -0.5f,
+                    -0.5f, -0.5f
             };
+
+            glBufferData(GL_ARRAY_BUFFER, sizeof(fVertex), fVertex, GL_STATIC_DRAW);
+
 
             // Shaders
             NordicArts::NordicEngine::Render::Shaders::Loader  oLoader;
             NordicArts::NordicEngine::Render::Shaders::Loader *pLoader = &oLoader;
             pLoader->addShader("GameFiles/Shaders/tut1.vertex", "VERTEX");
             pLoader->addShader("GameFiles/Shaders/tut1.fragment", "FRAGMENT");
-
+            pLoader->attachFragmentData(0, "outColor");
             unsigned int iProgramID = pLoader->buildShader();
 
-            unsigned int iVertexBuffer;
-            glGenBuffers(1, &iVertexBuffer);
-            glBindBuffer(GL_ARRAY_BUFFER, iVertexBuffer);
-            glBufferData(GL_ARRAY_BUFFER, sizeof(fBuffer), fBuffer, GL_STATIC_DRAW);
+            int iPosAttrib = pLoader->getAttrib("position");
+            glEnableVertexAttribArray(iPosAttrib);
+            glVertexAttribPointer(iPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
 
             // Text
             NordicArts::NordicEngine::Render::Text oText;
@@ -90,15 +97,7 @@ namespace Game {
                 // Set the color to base color on each refresh
                 pWindow->clear();
 
-                // Use shader
-                glUseProgram(iProgramID);
-
-                // Triangle
-                glEnableVertexAttribArray(0);
-                glBindBuffer(GL_ARRAY_BUFFER, iVertexBuffer);
-                glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
                 glDrawArrays(GL_TRIANGLES, 0, 3);
-                glDisableVertexAttribArray(0);
 
                 // Render Text
                 oText.render("Tester", 0, 0, 1);
@@ -107,9 +106,9 @@ namespace Game {
                 pWindow->display();
             }
 
-            glDeleteBuffers(1, &iVertexBuffer);
-            glDeleteVertexArrays(1, &iVertexArrayID);
             glDeleteProgram(iProgramID);
+            glDeleteBuffers(1, &iVBO);
+            glDeleteVertexArrays(1, &iVAO);
 
             oText.cleanup();
         } catch (std::exception &oException) {
