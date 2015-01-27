@@ -46,9 +46,9 @@ include_directories(${Ex}/NordicEngine)
 add_subdirectory(${Ex}/NordicEngine)
 
 # Boost
-find_package(Boost COMPONENTS locale REQUIRED)
-link_directories(${Boost_INCLUDES})
-include_directories(${Boost_INCLUDES})
+#find_package(Boost COMPONENTS locale REQUIRED)
+#link_directories(${Boost_INCLUDES})
+#include_directories(${Boost_INCLUDES})
 
 # Compile
 add_executable(Experiments ${GameSources} ${GameHeaders})
@@ -57,4 +57,4 @@ set_target_properties(Experiments PROPERTIES OUTPUT_NAME "Experiments.app")
 
 # Link
 target_link_libraries(Experiments NordicEngine)
-target_link_libraries(Experiments ${Boost_LIBRARIES})
+#target_link_libraries(Experiments ${Boost_LIBRARIES})
