@@ -15,7 +15,7 @@ EOF
 deleteCMake()
 {
     rm -rf `find . -type d -name CMakeFiles`    
-    rm -rf `find . -type d -name build`
+#    rm -rf `find . -type d -name build`
     rm -rf `find . -type f -name CMakeCache.txt`
     rm -rf `find . -type f -name Makefile`
     rm -rf `find . -type f -name cmake_install.cmake`

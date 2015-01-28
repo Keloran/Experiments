@@ -79,10 +79,10 @@ namespace Game {
             NordicArts::NordicEngine::Render::Shaders::Loader *pLoader = &oLoader;
             pLoader->addShader("GameFiles/Shaders/tut1.vertex", "VERTEX");
             pLoader->addShader("GameFiles/Shaders/tut1.fragment", "FRAGMENT");
-            pLoader->attachFragmentData(0, "outColor");
+            pLoader->addFragmentData(0, "outColor");
             unsigned int iProgramID = pLoader->buildShader();
 
-            int iPosAttrib = pLoader->getAttrib("position");
+            int iPosAttrib = pLoader->getAttrib(iProgramID, "position");
             glEnableVertexAttribArray(iPosAttrib);
             glVertexAttribPointer(iPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
